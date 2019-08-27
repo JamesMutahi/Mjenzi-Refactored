@@ -36,6 +36,20 @@ class MaterialList(generics.ListCreateAPIView):
         return super().post(request, *args, **kwargs)
 
 
+class ReportList(generics.ListCreateAPIView):
+    def get_queryset(self):
+        queryset = Reports.objects.filter(project_id=self.kwargs["pk"])
+        return queryset
+
+    serializer_class = ReportSerializer
+
+    def post(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs["pk"])
+        if not request.user == project.created_by:
+            raise PermissionDenied("You can not create reports for this project.")
+        return super().post(request, *args, **kwargs)
+
+
 class CreateRequest(APIView):
     serializer_class = RequestSerializer
 
