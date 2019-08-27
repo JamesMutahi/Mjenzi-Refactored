@@ -25,19 +25,20 @@ class Materials(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='materials')
 
     def __str__(self):
-        return self.name
+        return self.material_name
 
 
 class Requests(models.Model):
-    material = models.ForeignKey(Materials, on_delete=models.CASCADE, related_name='requests')
+    MATERIALS = Choices('Cement', 'Brick', 'Sand', 'Ballast', 'Metal rods', 'Roofing tiles')
+    material_name = models.CharField(choices=MATERIALS, default=MATERIALS.Cement, max_length=20)
     quantity = models.IntegerField(null=False)
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects')
     location = models.PointField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='projects')
     date_posted = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        unique_together = ("material", "project")
+    def __str__(self):
+        return self.material_name
 
 
 class Reports(models.Model):
