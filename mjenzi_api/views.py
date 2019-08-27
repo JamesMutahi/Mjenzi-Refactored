@@ -32,7 +32,19 @@ class MaterialList(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         project = Project.objects.get(pk=self.kwargs["pk"])
         if not request.user == project.created_by:
-            raise PermissionDenied("You can not create choice for this poll.")
+            raise PermissionDenied("You can not create materials for this project.")
         return super().post(request, *args, **kwargs)
 
 
+class CreateRequest(APIView):
+    serializer_class = RequestSerializer
+
+    def post(self, request, pk, material_pk):
+        requested_by = request.data.get("requested_by")
+        data = {'Material': material_pk, 'project': pk, 'requested_by': requested_by}
+        serializer = RequestSerializer(data=data)
+        if serializer.is_valid():
+            request = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

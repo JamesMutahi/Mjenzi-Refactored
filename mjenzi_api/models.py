@@ -48,8 +48,8 @@ class Reports(models.Model):
     overview = models.TextField(blank=False)
     date_posted = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        unique_together = ("report_name", "project")
+    def __str__(self):
+        return self.report_name
 
 
 class EmailRecipients(models.Model):
