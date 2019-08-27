@@ -37,18 +37,19 @@ class Requests(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ("request_name", "project")
+        unique_together = ("material", "project")
 
 
 class Reports(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='reports')
+    report_name = models.CharField(max_length=100, null=False)
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects')
     location = models.PointField()
     overview = models.TextField(blank=False)
     date_posted = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ("request_name", "project")
+        unique_together = ("report_name", "project")
 
 
 class EmailRecipients(models.Model):
