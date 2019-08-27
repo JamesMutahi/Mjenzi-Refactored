@@ -17,16 +17,14 @@ class RequestSerializer(serializers.ModelSerializer):
 
 
 class MaterialsSerializer(serializers.ModelSerializer):
-    requests = RequestSerializer(many=True, required=False)
-
     class Meta:
         model = Materials
         fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    requests = RequestSerializer(many=True, read_only=True, required=False)
     materials = MaterialsSerializer(many=True, read_only=True, required=False)
+    requests = RequestSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Project
