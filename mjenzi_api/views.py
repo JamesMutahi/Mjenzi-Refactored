@@ -21,3 +21,18 @@ class ProjectViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You can not delete this project.")
         return super().destroy(request, *args, **kwargs)
 
+
+class MaterialList(generics.ListCreateAPIView):
+    def get_queryset(self):
+        queryset = Materials.objects.filter(project_id=self.kwargs["pk"])
+        return queryset
+
+    serializer_class = MaterialsSerializer
+
+    def post(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs["pk"])
+        if not request.user == project.created_by:
+            raise PermissionDenied("You can not create choice for this poll.")
+        return super().post(request, *args, **kwargs)
+
+
