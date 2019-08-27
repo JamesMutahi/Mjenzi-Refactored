@@ -15,12 +15,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
-    def destroy(self, request, *args, **kwargs):
-        project = Project.objects.get(pk=self.kwargs["pk"])
-        if not request.user == project.created_by:
-            raise PermissionDenied("You can not delete this project.")
-        return super().destroy(request, *args, **kwargs)
-
 
 class MaterialList(generics.ListCreateAPIView):
     def get_queryset(self):
@@ -28,12 +22,6 @@ class MaterialList(generics.ListCreateAPIView):
         return queryset
 
     serializer_class = MaterialsSerializer
-
-    # def post(self, request, *args, **kwargs):
-    #     project = Project.objects.get(pk=self.kwargs["pk"])
-    #     if not request.user == project.created_by:
-    #         raise PermissionDenied("You can not create materials for this project.")
-    #     return super().post(request, *args, **kwargs)
 
 
 class ReportList(generics.ListCreateAPIView):
