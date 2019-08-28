@@ -77,13 +77,13 @@ class UserCreate(generics.CreateAPIView):
         new_user = User.objects.create_user(
             username=username, password=password, email=email
         )
-        send_mail(
-            'MJENZI',
-            'Registration successful. You are now able to login.',
-            "{EMAIL_HOST_USER}",
-            ['{email}'.format(email=email)],
-            fail_silently=False,
-        )
+        # send_mail(
+        #     'MJENZI',
+        #     'Registration successful. You are now able to login.',
+        #     "{EMAIL_HOST_USER}",
+        #     ['{email}'.format(email=email)],
+        #     fail_silently=False,
+        # )
         Token.objects.create(user=new_user)
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
