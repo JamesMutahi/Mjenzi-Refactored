@@ -91,9 +91,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-#
+# development
 if config('MODE') == "dev":
     DATABASES = {
         'default': {
@@ -104,18 +102,15 @@ if config('MODE') == "dev":
             'HOST': config('DB_HOST'),
             'PORT': '',
         }
+
     }
-# # production
-# else:
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL')
-#     )
-# }
-
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
+# production
+else:
+    db_config = dj_database_url.config(default=config('DATABASE_URL'))
+    db_config['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+    DATABASES = {
+        'default': db_config
+    }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
