@@ -9,7 +9,7 @@ from .serializers import *
 
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
-
+from django.core.mail import send_mail
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
@@ -76,6 +76,13 @@ class UserCreate(generics.CreateAPIView):
             )
         new_user = User.objects.create_user(
             username=username, password=password, email=email
+        )
+        send_mail(
+            'MJENZI',
+            'Registration successful. You are now able to login.',
+            "{EMAIL_HOST_USER}",
+            ['{email}'.format(email=email)],
+            fail_silently=False,
         )
         Token.objects.create(user=new_user)
         return Response(
