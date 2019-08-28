@@ -16,7 +16,7 @@ class Project(models.Model):
 
 
 class Materials(models.Model):
-    MATERIALS = Choices('Cement', 'Brick', 'Sand', 'Ballast', 'Metal rods', 'Roofing tiles')
+    MATERIALS = Choices('Cement', 'Brick', 'Sand', 'Ballast', 'Metal rods', 'Roofing tiles', 'Plywood', 'Timber', 'Glass')
     material_name = models.CharField(choices=MATERIALS, default=MATERIALS.Cement, max_length=20)
     # quantity
     quantity = models.IntegerField(null=False)

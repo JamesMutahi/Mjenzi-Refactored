@@ -31,8 +31,10 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # heroku build pack
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = '/app/.heroku/vendor/lib/libgeos_c.so' if os.environ.get('ENV') == 'HEROKU' else os.getenv(
+    'GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = '/app/.heroku/vendor/lib/libgdal.so' if os.environ.get('ENV') == 'HEROKU' else os.getenv(
+    'GDAL_LIBRARY_PATH')
 # Application definition
 
 INSTALLED_APPS = [
@@ -92,24 +94,24 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 #
-# if config('MODE') == "dev":
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#             'NAME': config('DB_NAME'),
-#             'USER': config('DB_USER'),
-#             'PASSWORD': config('DB_PASSWORD'),
-#             'HOST': config('DB_HOST'),
-#             'PORT': '',
-#         }
-#     }
+if config('MODE') == "dev":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': '',
+        }
+    }
 # # production
 # else:
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
@@ -152,8 +154,6 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
-
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
