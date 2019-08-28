@@ -77,6 +77,7 @@ class UserCreate(generics.CreateAPIView):
         new_user = User.objects.create_user(
             username=username, password=password, email=email
         )
+        Token.objects.create(user=new_user)
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
         )
