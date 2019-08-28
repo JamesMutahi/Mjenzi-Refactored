@@ -30,6 +30,9 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
+# heroku build pack
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 # Application definition
 
 INSTALLED_APPS = [
@@ -150,9 +153,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# heroku build pack
-GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
-GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
+
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
