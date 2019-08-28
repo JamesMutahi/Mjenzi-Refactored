@@ -51,6 +51,36 @@ class UserCreate(generics.CreateAPIView):
     permission_classes = ()
     serializer_class = UserSerializer
 
+    """
+    POST auth/register/
+    """
+
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username", "")
+        password = request.data.get("password", "")
+        password2 = request.data.get("password2", "")
+        email = request.data.get("email", "")
+        if not username and not password and not email and not password2:
+            return Response(
+                data={
+                    "message": "username, password and email is required to register a user"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        if password != password2:
+            return Response(
+                data={
+                    "message": "Passwords don't match"
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        new_user = User.objects.create_user(
+            username=username, password=password, email=email
+        )
+        return Response(
+            data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
+        )
+
 
 class LoginView(APIView):
     permission_classes = ()
