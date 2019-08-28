@@ -23,12 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rvt*jqkdoykyfv#g$lmtia9^2g2-f9t%oq!t5ri7z)yi7!4$i8'
-
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+MODE = config("MODE", default="dev")
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # Application definition
 
@@ -156,5 +156,3 @@ GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals())
-
-
