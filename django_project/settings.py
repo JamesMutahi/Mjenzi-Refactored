@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     'mjenzi_api',
     'rest_framework.authtoken',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework_swagger',
+    
 ]
 
 MIDDLEWARE = [
@@ -98,7 +100,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
