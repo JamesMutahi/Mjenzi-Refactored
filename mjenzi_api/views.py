@@ -1,15 +1,18 @@
+from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework import viewsets
 
 from .models import *
 from .serializers import *
 
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
-from django.core.mail import send_mail
+
+
+def home(request):
+    return render(request, 'home.html')
 
 
 class ProjectList(generics.ListCreateAPIView):
