@@ -30,17 +30,6 @@ class ProjectList(generics.ListCreateAPIView):
             description=request.data["description"],
             user=request.user,
         )
-        developer_email = request.user.email
-        email = request.data["contractor_email"]
-        send_mail(
-            'MJENZI',
-            'There is a new project request and post . Login into yout account with your credantials to see the post ',
-            'Cheers!'
-            'Innovex group of companies'
-            "{EMAIL_HOST_USER}",
-            ['{email}'.format(email=email)],
-            fail_silently=False,
-        )
         return Response(
             data=ProjectSerializer(a_project).data,
             status=status.HTTP_201_CREATED
@@ -127,16 +116,11 @@ class UserCreate(generics.CreateAPIView):
             username=username, password=password, email=email
         )
         Token.objects.create(user=new_user)
-        send_mail(
-            'MJENZI',
-            'Congratulations you have been succesfully registered. Welcome to Mjenzi App.',
-            "{EMAIL_HOST_USER}",
-            ['{email}'.format(email=email)],
-            fail_silently=False,
-        )
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
         )
+
+
 
 
 class LoginView(APIView):
