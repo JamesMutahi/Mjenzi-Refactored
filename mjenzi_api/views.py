@@ -11,7 +11,25 @@ from django.contrib.auth import authenticate
 from rest_framework.exceptions import PermissionDenied
 from django.core.mail import send_mail
 
-class ProjectViewSet(viewsets.ModelViewSet):
+
+class ProjectList(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+    def post(self, request, *args, **kwargs):
+        a_project = Project.objects.create(
+            project_name=request.data["project_name"],
+            contractor_email=request.data["contractor_email"],
+            description=request.data["description"],
+            user=request.user,
+        )
+        return Response(
+            data=ProjectSerializer(a_project).data,
+            status=status.HTTP_201_CREATED
+        )
+
+
+class ProjectDetail(generics.RetrieveDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
@@ -33,7 +51,7 @@ class ReportList(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         project = Project.objects.get(pk=self.kwargs["pk"])
-        if not request.user == project.created_by:
+        if not request.user == project.user:
             raise PermissionDenied("You can not create reports for this project.")
         return super().post(request, *args, **kwargs)
 
@@ -44,6 +62,12 @@ class RequestList(generics.ListCreateAPIView):
         return queryset
 
     serializer_class = RequestSerializer
+
+    def post(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs["pk"])
+        if not request.user == project.user:
+            raise PermissionDenied("You can not create requests for this project.")
+        return super().post(request, *args, **kwargs)
 
 
 class UserCreate(generics.CreateAPIView):
