@@ -19,6 +19,7 @@ def home(request):
 class ProjectList(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
         a_project = Project.objects.create(
@@ -36,9 +37,11 @@ class ProjectList(generics.ListCreateAPIView):
 class ProjectDetail(generics.RetrieveDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class MaterialList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Materials.objects.filter(project_id=self.kwargs["pk"])
@@ -48,6 +51,7 @@ class MaterialList(generics.ListCreateAPIView):
 
 
 class ReportList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Reports.objects.filter(project_id=self.kwargs["pk"])
@@ -63,6 +67,7 @@ class ReportList(generics.ListCreateAPIView):
 
 
 class RequestList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Requests.objects.filter(project_id=self.kwargs["pk"])
