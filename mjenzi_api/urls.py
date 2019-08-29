@@ -2,7 +2,6 @@ from django.urls import path
 from .views import ProjectList, ProjectDetail, MaterialList, UserCreate, ReportList, RequestList, LoginView, home
 
 urlpatterns = [
-    path("", home, name="home"),
     path("projects/", ProjectList.as_view(), name="projects_list"),
     path("projects/<int:pk>/", ProjectDetail.as_view(), name="projects_detail"),
     path("projects/<int:pk>/reports/", ReportList.as_view(), name="reports_list"),

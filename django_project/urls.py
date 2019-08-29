@@ -25,7 +25,7 @@ schema_view = get_swagger_view('Mjengo Api')
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^', include('mjenzi_api.urls')),
-    path(r'docs/', include_docs_urls(title='Mjenzi API')),
+    path(r'', include_docs_urls(title='Mjenzi API')),
     # path('api_documentation/',schema_view),
     path('openapi', get_schema_view(
         title="Your Project",
