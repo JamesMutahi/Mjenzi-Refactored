@@ -59,12 +59,6 @@ class MaterialList(generics.ListCreateAPIView):
     serializer_class = MaterialsSerializer
 
 
-class RequestDetail(generics.RetrieveDestroyAPIView):
-    queryset = Requests.objects.all()
-    serializer_class = RequestSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-
 class ReportList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
