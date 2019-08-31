@@ -29,7 +29,6 @@ class ProjectList(generics.ListCreateAPIView):
             contractor_email=request.data["contractor_email"],
             description=request.data["description"],
             user=request.user,
-            developer_email=request.user.email
         )
         return Response(
             data=ProjectSerializer(a_project).data,

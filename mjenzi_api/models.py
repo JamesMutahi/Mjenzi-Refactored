@@ -9,8 +9,6 @@ class Project(models.Model):
     project_name = models.CharField(max_length=100, null=False)
     contractor_email = models.CharField(max_length=100, null=False)
     description = models.TextField(default="no description")
-    # date_posted = models.DateTimeField(default=timezone.now)
-    developer_email = models.CharField(max_length=100, null=False)
 
     def __str__(self):
         return self.project_name
@@ -36,7 +34,6 @@ class Requests(models.Model):
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', blank=False)
     location = models.PointField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='projects')
-    # date_posted = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=30, null=True)
 
     def __str__(self):
@@ -49,8 +46,6 @@ class Reports(models.Model):
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', null=False)
     location = models.PointField()
     overview = models.TextField(blank=False)
-
-    # date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.report_name
