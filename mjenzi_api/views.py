@@ -29,6 +29,7 @@ class ProjectList(generics.ListCreateAPIView):
             contractor_email=request.data["contractor_email"],
             description=request.data["description"],
             user=request.user,
+            developer_email=request.user.email
         )
         return Response(
             data=ProjectSerializer(a_project).data,
@@ -41,6 +42,12 @@ class ProjectDetail(generics.RetrieveDestroyAPIView):
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def destroy(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs["pk"])
+        if not request.user == project.user:
+            raise PermissionDenied("You can not delete this project.")
+        return super().destroy(request, *args, **kwargs)
+
 
 class MaterialList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
@@ -50,6 +57,12 @@ class MaterialList(generics.ListCreateAPIView):
         return queryset
 
     serializer_class = MaterialsSerializer
+
+
+class RequestDetail(generics.RetrieveDestroyAPIView):
+    queryset = Requests.objects.all()
+    serializer_class = RequestSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 class ReportList(generics.ListCreateAPIView):
@@ -119,8 +132,6 @@ class UserCreate(generics.CreateAPIView):
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
         )
-
-
 
 
 class LoginView(APIView):
