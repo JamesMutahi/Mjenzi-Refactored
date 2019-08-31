@@ -49,7 +49,7 @@ class Reports(models.Model):
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', null=False)
     location = models.PointField()
     overview = models.TextField(blank=False)
-    date_posted = models.DateTimeField(default=timezone.now)
+    # date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.report_name
