@@ -97,12 +97,6 @@ class RequestDetail(generics.RetrieveDestroyAPIView):
     serializer_class = RequestSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
-    # def destroy(self, request, *args, **kwargs):
-    #     project = Project.objects.get(pk=self.kwargs["pk"])
-    #     if not request.user == project.user:
-    #         raise PermissionDenied("You can not delete this project.")
-    #     return super().destroy(request, *args, **kwargs)
-
     def put(self, request, *args, **kwargs):
         try:
             a_request = self.queryset.get(pk=kwargs["pk"])
