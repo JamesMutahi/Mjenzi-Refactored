@@ -3,6 +3,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import *
 from .serializers import *
@@ -89,6 +90,32 @@ class RequestList(generics.ListCreateAPIView):
         if not request.user == project.user:
             raise PermissionDenied("You can not create requests for this project.")
         return super().post(request, *args, **kwargs)
+
+
+class RequestDetail(generics.RetrieveDestroyAPIView):
+    queryset = Requests.objects.all()
+    serializer_class = RequestSerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    # def destroy(self, request, *args, **kwargs):
+    #     project = Project.objects.get(pk=self.kwargs["pk"])
+    #     if not request.user == project.user:
+    #         raise PermissionDenied("You can not delete this project.")
+    #     return super().destroy(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        try:
+            a_request = self.queryset.get(pk=kwargs["pk"])
+            serializer = RequestSerializer()
+            updated_request = serializer.update(a_request, request.data)
+            return Response(RequestSerializer(updated_request).data)
+        except ObjectDoesNotExist:
+            return Response(
+                data={
+                    "message": "Request with id: {} does not exist".format(kwargs["pk"])
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class UserCreate(generics.CreateAPIView):
