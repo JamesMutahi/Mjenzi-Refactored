@@ -32,6 +32,17 @@ class ProjectList(generics.ListCreateAPIView):
             user=request.user,
             developer_email=request.user.email
         )
+        email=request.data["contractor_email"]
+        send_mail(
+            'MJENZI',
+            'Hello,'
+            'There is a new project request and a post . Login into your account with your credantials to see the post ',
+            'Cheers!'
+            'Innovex group of companies'
+            "{EMAIL_HOST_USER}",
+            ['{email}'.format(email=email)],
+            fail_silently=True,
+        )
         return Response(
             data=ProjectSerializer(a_project).data,
             status=status.HTTP_201_CREATED
@@ -95,6 +106,7 @@ class RequestList(generics.ListCreateAPIView):
 class RequestDetail(generics.RetrieveDestroyAPIView):
     queryset = Requests.objects.all()
     permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = RequestSerializer
 
     def put(self, request, *args, **kwargs):
         try:
@@ -150,7 +162,7 @@ class UserCreate(generics.CreateAPIView):
             'Innovex groups of companies'
             "{EMAIL_HOST_USER}",
             ['{email}'.format(email=email)],
-            fail_silently=False,
+            fail_silently=True,
         )
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
