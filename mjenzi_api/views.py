@@ -94,7 +94,6 @@ class RequestList(generics.ListCreateAPIView):
 
 class RequestDetail(generics.RetrieveDestroyAPIView):
     queryset = Requests.objects.all()
-    serializer_class = RequestSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def put(self, request, *args, **kwargs):
@@ -144,6 +143,15 @@ class UserCreate(generics.CreateAPIView):
             username=username, password=password, email=email
         )
         Token.objects.create(user=new_user)
+        send_mail(
+            'MJENZI',
+            'Congratulations you have been succesfully registered. Welcome to Mjenzi App.',
+            'cheers!, '
+            'Innovex groups of companies'
+            "{EMAIL_HOST_USER}",
+            ['{email}'.format(email=email)],
+            fail_silently=True,
+        )
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
         )
