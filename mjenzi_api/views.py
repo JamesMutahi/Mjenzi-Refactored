@@ -150,7 +150,7 @@ class UserCreate(generics.CreateAPIView):
             'Innovex groups of companies'
             "{EMAIL_HOST_USER}",
             ['{email}'.format(email=email)],
-            fail_silently=True,
+            fail_silently=False,
         )
         return Response(
             data=UserSerializer(new_user).data, status=status.HTTP_201_CREATED
