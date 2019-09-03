@@ -20,7 +20,7 @@ def home(request):
 
 
 class ProjectList(generics.ListCreateAPIView):
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by("-date_posted")
     serializer_class = ProjectSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -32,7 +32,7 @@ class ProjectList(generics.ListCreateAPIView):
             user=request.user,
             developer_email=request.user.email
         )
-        email=request.data["contractor_email"]
+        email = request.data["contractor_email"]
         send_mail(
             'MJENZI',
             'Hello,'
@@ -75,23 +75,17 @@ class ReportList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        queryset = Reports.objects.filter(project_id=self.kwargs["pk"])
+        queryset = Reports.objects.filter(project_id=self.kwargs["pk"]).order_by("-date_posted")
         return queryset
 
     serializer_class = ReportSerializer
-
-    def post(self, request, *args, **kwargs):
-        project = Project.objects.get(pk=self.kwargs["pk"])
-        if not request.user == project.user:
-            raise PermissionDenied("You can not create reports for this project.")
-        return super().post(request, *args, **kwargs)
 
 
 class RequestList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get_queryset(self):
-        queryset = Requests.objects.filter(project_id=self.kwargs["pk"])
+        queryset = Requests.objects.filter(project_id=self.kwargs["pk"]).order_by("-date_posted")
         return queryset
 
     serializer_class = RequestSerializer

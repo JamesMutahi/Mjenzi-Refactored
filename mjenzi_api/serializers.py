@@ -25,6 +25,7 @@ class MaterialsSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     materials = MaterialsSerializer(many=True, read_only=True, required=False)
     requests = RequestSerializer(many=True, read_only=True, required=False)
+    reports = ReportSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Project
