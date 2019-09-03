@@ -50,8 +50,9 @@ class ProjectList(generics.ListCreateAPIView):
         )
 
     def get_queryset(self):
-        projects = Project.objects.filter(user=self.request.user)
-        return Project.objects.filter(id__in=projects)
+        users = Project.objects.filter(user=self.request.user)
+        emails = Project.objects.filter(contractor_email=self.request.user.email)
+        return Project.objects.filter(id__in=users or emails)
 
 
 class ProjectDetail(generics.RetrieveDestroyAPIView):
