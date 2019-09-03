@@ -48,6 +48,10 @@ class ProjectList(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+    def get(self, request, *args, **kwargs):
+        project = Project.objects.filter(user=request.user)
+        return super().get(request, *args, **kwargs)
+
 
 class ProjectDetail(generics.RetrieveDestroyAPIView):
     queryset = Project.objects.all()

@@ -6,8 +6,8 @@ from django.utils import timezone
 
 class Project(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project_name = models.EmailField(max_length=100, null=False)
-    contractor_email = models.CharField(max_length=100, null=False)
+    project_name = models.CharField(max_length=100, null=False)
+    contractor_email = models.EmailField(max_length=100, null=False)
     description = models.TextField(default="no description")
     date_posted = models.DateTimeField(default=timezone.now)
     developer_email = models.EmailField(max_length=100, null=False)
