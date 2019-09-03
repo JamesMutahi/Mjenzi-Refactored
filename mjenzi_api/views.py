@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404
 
 from .models import *
 from .serializers import *
@@ -48,9 +49,9 @@ class ProjectList(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
-    def get(self, request, *args, **kwargs):
-        project = Project.objects.filter(user=request.user)
-        return super().get(request, *args, **kwargs)
+    def get_queryset(self):
+        projects = Project.objects.filter(user=self.request.user)
+        return Project.objects.filter(id__in=projects)
 
 
 class ProjectDetail(generics.RetrieveDestroyAPIView):
