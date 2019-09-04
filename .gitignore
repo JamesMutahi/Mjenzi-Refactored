@@ -1,5 +1,5 @@
 virtual/
-.en v
+.env
 .*pyc
 .idea
 .vscode
