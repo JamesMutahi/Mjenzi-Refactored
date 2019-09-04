@@ -36,10 +36,10 @@ class ProjectList(generics.ListCreateAPIView):
         email = request.data["contractor_email"]
         send_mail(
             'MJENZI',
-            'Hello,'
-            'A developer has created a project with your name on it. Register and login to view project details'
-            'Cheers!'
-            'Innovex.',
+            'A Real Estate Developer has created a project with your name on it. Register and login to view project details.',
+            'Cheers!, '
+            'Innovex.'
+            "{EMAIL_HOST_USER}",
             ['{email}'.format(email=email)],
             fail_silently=True,
         )
