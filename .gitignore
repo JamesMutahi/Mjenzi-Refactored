@@ -1,6 +1,6 @@
-virtual/
+virtu al/
 .env
-.*p yc
+.*pyc
 .idea
 .vscode
 ./pycache
