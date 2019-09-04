@@ -2,5 +2,5 @@ virtual/
 .env
 .*pyc
 .idea
-.vscode
+.vsco de
 ./pycache
