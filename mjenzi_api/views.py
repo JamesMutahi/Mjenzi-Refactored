@@ -37,10 +37,9 @@ class ProjectList(generics.ListCreateAPIView):
         send_mail(
             'MJENZI',
             'Hello,'
-            'There is a new project request and a post . Login into your account with your credantials to see the post ',
+            'A developer has created a project with your name on it. Register and login to view project details'
             'Cheers!'
-            'Innovex group of companies'
-            "{EMAIL_HOST_USER}",
+            'Innovex.',
             ['{email}'.format(email=email)],
             fail_silently=True,
         )
@@ -159,7 +158,7 @@ class UserCreate(generics.CreateAPIView):
             'MJENZI',
             'Congratulations you have been succesfully registered. Welcome to Mjenzi App.',
             'cheers!, '
-            'Innovex groups of companies'
+            'Innovex.'
             "{EMAIL_HOST_USER}",
             ['{email}'.format(email=email)],
             fail_silently=True,

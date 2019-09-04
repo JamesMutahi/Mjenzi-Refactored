@@ -32,11 +32,11 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # email configurations
-EMAIL_USE_TLS=config("EMAIL_USE_TLS")
-EMAIL_HOST=config("EMAIL_HOST")
-EMAIL_PORT=config("EMAIL_PORT")
-EMAIL_HOST_USER=config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD=config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS=True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='mjenziapp@gmail.com'
+EMAIL_HOST_PASSWORD='12139lenana'
+EMAIL_PORT=587
 
 # heroku build pack
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
