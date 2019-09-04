@@ -29,20 +29,16 @@ SECRET_KEY = config('SECRET_KEY')
 MODE = config("MODE", default="dev")
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = '.herokuapp.com'
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 # email settings
-# EMAIL_USE_TLS = config('EMAIL_USE_TLS')
-# EMAIL_HOST = config('EMAIL_HOST')
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-# EMAIL_PORT = 587
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'mjenziapp@gmail.com'
-EMAIL_HOST_PASSWORD = '12139lenana'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 # heroku build pack
 GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
 GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
