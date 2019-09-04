@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from . import Project, Materials, Requests, Reports
+from .models import , Materials, Requests, Reports
 
 admin.site.register(Project)
 admin.site.register(Materials)
