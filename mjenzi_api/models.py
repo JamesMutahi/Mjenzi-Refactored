@@ -35,7 +35,7 @@ class Requests(models.Model):
     quantity = models.IntegerField(null=False)
     photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', blank=False)
     location = models.PointField()
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='projects')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='requests')
     status = models.CharField(max_length=30, null=True)
     date_posted = models.DateTimeField(default=timezone.now)
 
