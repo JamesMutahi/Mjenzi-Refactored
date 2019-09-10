@@ -95,12 +95,6 @@ class RequestList(generics.ListCreateAPIView):
 
     serializer_class = RequestSerializer
 
-    def post(self, request, *args, **kwargs):
-        project = Project.objects.get(pk=self.kwargs["pk"])
-        if not request.user == project.user:
-            raise PermissionDenied("You can not create requests for this project.")
-        return super().post(request, *args, **kwargs)
-
 
 class RequestDetail(generics.RetrieveDestroyAPIView):
     queryset = Requests.objects.all()
