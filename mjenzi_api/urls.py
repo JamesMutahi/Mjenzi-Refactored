@@ -1,5 +1,8 @@
 from django.urls import path
 from .views import ProjectList, ProjectDetail, MaterialList, UserCreate, ReportList, RequestList, LoginView, home, RequestDetail
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("projects/", ProjectList.as_view(), name="projects_list"),
@@ -10,5 +13,5 @@ urlpatterns = [
     path("requests/<int:pk>/", RequestDetail.as_view(), name="requests_detail"),
     path("sign-up/", UserCreate.as_view(), name="user_create"),
     path("login/", LoginView.as_view(), name="login"),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
