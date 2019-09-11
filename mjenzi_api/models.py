@@ -33,7 +33,7 @@ class Requests(models.Model):
     MATERIALS = Choices('Cement', 'Brick', 'Sand', 'Ballast', 'Metal rods', 'Roofing tiles')
     material_name = models.CharField(choices=MATERIALS, default=MATERIALS.Cement, max_length=20)
     quantity = models.IntegerField(null=False)
-    photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', blank=False)
+    photo = models.ImageField(upload_to='Requests', blank=False)
     location = models.PointField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='requests')
     status = models.CharField(max_length=30, null=True)
@@ -46,7 +46,7 @@ class Requests(models.Model):
 class Reports(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='reports')
     report_name = models.CharField(max_length=100, null=False)
-    photo = models.ImageField(default='projects/default.jpeg', upload_to='projects', null=False)
+    photo = models.ImageField(upload_to='Reports', null=False)
     location = models.PointField()
     overview = models.TextField(blank=False)
     date_posted = models.DateTimeField(default=timezone.now)

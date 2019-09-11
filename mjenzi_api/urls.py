@@ -13,5 +13,6 @@ urlpatterns = [
     path("requests/<int:pk>/", RequestDetail.as_view(), name="requests_detail"),
     path("sign-up/", UserCreate.as_view(), name="user_create"),
     path("login/", LoginView.as_view(), name="login"),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]\
+              # + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
