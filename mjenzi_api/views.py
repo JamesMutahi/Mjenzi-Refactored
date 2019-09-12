@@ -93,6 +93,20 @@ class RequestList(generics.ListCreateAPIView):
         queryset = Requests.objects.filter(project_id=self.kwargs["pk"]).order_by("-date_posted")
         return queryset
 
+    def post(self, request, *args, **kwargs):
+        project = Project.objects.get(id=self.kwargs["pk"])
+        dev_email = project.developer_email
+
+        send_mail(
+            'MJENZI',
+            'You have a new request. Login to view.',
+            'CHEERS!, '
+            'Innovex.'
+            "{EMAIL_HOST_USER}",
+            ['{email}'.format(email=dev_email)],
+            fail_silently=True,
+        )
+
     serializer_class = RequestSerializer
 
 
